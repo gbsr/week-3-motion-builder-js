@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .main-content {
   display: flex;
 }
@@ -11,6 +16,10 @@ aside {
   border-right: 1px solid #000;
 }
 
+.preview h2 {
+  padding-left: 14px;
+}
+
 /* code panel */
 .code-export {
   position: fixed;
@@ -19,6 +28,10 @@ aside {
   background: #111;
   border: 1px solid #000;
   color: #fff;
+}
+
+.code-export h2 {
+  padding-left: 14px;
 }
 
 .code-export pre {
