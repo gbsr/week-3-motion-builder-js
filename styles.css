@@ -1,0 +1,41 @@
+.main-content {
+  display: flex;
+}
+
+aside {
+  background: #333;
+  color: #fff;
+  padding: 15px;
+  width: 40%;
+  height: 100vh;
+  border-right: 1px solid #000;
+}
+
+/* code panel */
+.code-export {
+  position: fixed;
+  bottom: 0;
+  height: 40%;
+  background: #111;
+  border: 1px solid #000;
+  color: #fff;
+}
+
+.code-export pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% - 40px);
+  padding: 14px;
+}
+
+code {
+  display: block;
+  background: #222;
+  color: #0f0;
+  font-family: monospace;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
