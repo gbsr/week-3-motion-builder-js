@@ -1,7 +1,7 @@
 export const PROPERTIES = {
   x: {
     id: "x",
-    label: "X",
+    label: "X position",
     type: "number",
     min: -400,
     max: 400,
@@ -15,7 +15,7 @@ export const PROPERTIES = {
 
   y: {
     id: "y",
-    label: "Y",
+    label: "Y position",
     type: "number",
     min: -400,
     max: 400,
