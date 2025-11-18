@@ -1,10 +1,14 @@
 body {
   margin: 0;
+  font-family: Arial, sans-serif;
+  background: #333;
+  color: #fff;
   padding: 0;
 }
 
 .main-content {
   display: flex;
+  height: 100vh;
 }
 
 aside {
@@ -16,20 +20,34 @@ aside {
   border-right: 1px solid #000;
 }
 
-.preview h2 {
-  padding-left: 14px;
-}
-
-/* code panel */
-.code-export {
-  position: fixed;
-  bottom: 0;
-  height: 40%;
-  background: #111;
-  border: 1px solid #000;
+.animation-builder {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #222;
   color: #fff;
 }
 
+/* TOP BOX: preview area */
+.preview {
+  flex: 0 0 65%;       /* ~65% of height */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* horizontal center */
+  justify-content: center; /* vertical center */
+}
+
+/* BOTTOM BOX: code panel */
+.code-export {
+  background: #222;
+  border-top: 1px solid #000;
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+/* code panel content */
 .code-export h2 {
   padding-left: 14px;
 }
@@ -40,15 +58,58 @@ aside {
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 40px);
-  padding: 14px;
+  padding-block: 14px;
+  margin: 0;
 }
 
 code {
   display: block;
-  background: #222;
+  background-color: #111;
+  border: 1px solid #333;
+  box-shadow: 0 0 5px #222;
   color: #0f0;
   font-family: monospace;
-
   white-space: pre-wrap;
   word-break: break-word;
+  padding: 14px;
+  margin-inline: 14px;
+  border-radius: 10px;
+}
+
+code:hover {
+  border: 1px solid #555;
+  transition: 0.15s ease;
+}
+
+span {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.animate-me {
+  width: 180px;
+  height: 180px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 14px;
+}
+
+button:hover {
+  background-color: #555;
+  transition: 0.15s ease;
 }
