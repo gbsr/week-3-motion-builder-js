@@ -1,6 +1,6 @@
 import { PROPERTIES } from "../props/properties.js";
 
-export default function renderEditorPanel(step) {
+export function renderEditorPanel(step) {
   const panel = document.getElementById("editor-panel-content");
   panel.innerHTML = "";
 
@@ -53,4 +53,45 @@ export default function renderEditorPanel(step) {
 
     panel.appendChild(propDiv);
   }
+}
+
+export function renderTimingControls(step) {
+  const timingPanel = document.getElementById("timing-controls");
+  if (!timingPanel) return;
+
+  // timingPanel.innerHTML = "";
+
+  // Duration
+  const durationLabel = document.createElement("label");
+  durationLabel.textContent = "Duration (ms):";
+  timingPanel.appendChild(durationLabel);
+
+  const durationInput = document.createElement("input");
+  durationInput.type = "number";
+  durationInput.min = 50;
+  durationInput.max = 10000;
+  durationInput.step = 50;
+  durationInput.value = step.duration;
+  durationInput.addEventListener("input", () => {
+    step.duration = Number(durationInput.value);
+  });
+  timingPanel.appendChild(durationInput);
+
+  // Easing
+  const easingLabel = document.createElement("label");
+  easingLabel.textContent = "Easing:";
+  timingPanel.appendChild(easingLabel);
+
+  const easingSelect = document.createElement("select");
+  ["linear", "ease", "ease-in", "ease-out", "ease-in-out"].forEach((name) => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    if (name === step.easing) opt.selected = true;
+    easingSelect.appendChild(opt);
+  });
+  easingSelect.addEventListener("change", () => {
+    step.easing = easingSelect.value;
+  });
+  timingPanel.appendChild(easingSelect);
 }
