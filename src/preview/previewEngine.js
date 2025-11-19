@@ -24,7 +24,7 @@ export function playCurrentStep() {
 
 //  Turn a step into two Web Animations keyframes: [from, to]
  
-function buildKeyframesFromStep(step) {
+export function buildKeyframesFromStep(step) {
   const fromFrame = buildFrame(step.from);
   const toFrame = buildFrame(step.to);
   return [fromFrame, toFrame];

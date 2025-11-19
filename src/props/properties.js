@@ -41,6 +41,20 @@ export const PROPERTIES = {
     appliesTo: "transform.scale"
   },
 
+  rotation: {
+    id: "rotation",
+    label: "Rotation",
+    type: "number",
+    min: -180,
+    max: 180,
+    step: 1,
+    defaultFrom: 0,
+    defaultTo: 0,
+    category: "transform",
+    unit: "deg",
+    appliesTo: "transform.rotate"
+  },
+
   opacity: {
     id: "opacity",
     label: "Opacity",

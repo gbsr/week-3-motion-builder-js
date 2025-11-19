@@ -62,6 +62,7 @@ aside {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 /* code panel content */
@@ -215,4 +216,12 @@ input {
 
 .description-content.hidden {
   display: none;
+}
+
+.active {
+  background-color: #222;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 0 5px #000;
+
 }

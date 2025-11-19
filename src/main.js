@@ -2,10 +2,12 @@
 import { addStep, deleteStep, state } from "./state/state.js";
 import { renderTimeline } from "./ui/renderTimeline.js";
 import { playCurrentStep, playTimeline } from "./preview/previewEngine.js";
+import { generateCodeFromTimeline } from "./ui/codeOutput.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
-
+  const generatedCode = document.getElementById("generated-code");
+  
   // Preview hover
   const previewBox = document.getElementById("element-to-animate");
   if (previewBox) {
@@ -40,6 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (playButton) {
     playButton.addEventListener("click", () => {
       playTimeline();
+      generateCodeFromTimeline(generatedCode);
     });
   }
 
