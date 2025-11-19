@@ -1,8 +1,9 @@
 import { PROPERTIES } from "../props/properties.js";
 
-export function renderEditorPanel(step) {
-  const panel = document.getElementById("editor-panel-content");
-  panel.innerHTML = "";
+export function renderEditorPanel(step, parent) {
+  const panel = document.createElement("div");
+  panel.className = "editor-panel-content";
+  parent.appendChild(panel);
 
   for (const propId in PROPERTIES) {
     const prop = PROPERTIES[propId];
@@ -10,58 +11,55 @@ export function renderEditorPanel(step) {
     const propDiv = document.createElement("div");
     propDiv.className = "property-control";
 
-    // "X", "Y", "Scale", ...
-    const nameSpan = document.createElement("p");
     const propertyContainer = document.createElement("div");
     propertyContainer.className = "property-container";
-    propertyContainer.appendChild(nameSpan);
-    
+
+    const nameSpan = document.createElement("p");
     nameSpan.className = "ui-control";
-    nameSpan.textContent = `${prop.label} `;
-    
+    nameSpan.textContent = prop.label;
+    propertyContainer.appendChild(nameSpan);
+
     propDiv.appendChild(propertyContainer);
 
-    // FROM
     const labelFrom = document.createElement("label");
-    labelFrom.htmlFor = `input-${prop.id}-from`;
     labelFrom.textContent = "From:";
     propDiv.appendChild(labelFrom);
 
     const inputFrom = document.createElement("input");
     inputFrom.type = "number";
-    inputFrom.id = `input-${prop.id}-from`;
     inputFrom.min = prop.min;
     inputFrom.max = prop.max;
     inputFrom.step = prop.step;
-    inputFrom.value = prop.defaultFrom;
+    inputFrom.value = step.from[propId];
+    inputFrom.addEventListener("input", () => {
+      step.from[propId] = Number(inputFrom.value);
+    });
     propDiv.appendChild(inputFrom);
 
-    // TO
     const labelTo = document.createElement("label");
-    labelTo.htmlFor = `input-${prop.id}-to`;
     labelTo.textContent = "To:";
     propDiv.appendChild(labelTo);
 
     const inputTo = document.createElement("input");
     inputTo.type = "number";
-    inputTo.id = `input-${prop.id}-to`;
     inputTo.min = prop.min;
     inputTo.max = prop.max;
     inputTo.step = prop.step;
-    inputTo.value = prop.defaultTo;
+    inputTo.value = step.to[propId];
+    inputTo.addEventListener("input", () => {
+      step.to[propId] = Number(inputTo.value);
+    });
     propDiv.appendChild(inputTo);
 
     panel.appendChild(propDiv);
   }
 }
 
-export function renderTimingControls(step) {
-  const timingPanel = document.getElementById("timing-controls");
-  if (!timingPanel) return;
+export function renderTimingControls(step, parent) {
+  const timingPanel = document.createElement("div");
+  timingPanel.className = "step-controls";
+  parent.appendChild(timingPanel);
 
-  // timingPanel.innerHTML = "";
-
-  // Duration
   const durationLabel = document.createElement("label");
   durationLabel.textContent = "Duration (ms):";
   timingPanel.appendChild(durationLabel);
@@ -77,7 +75,6 @@ export function renderTimingControls(step) {
   });
   timingPanel.appendChild(durationInput);
 
-  // Easing
   const easingLabel = document.createElement("label");
   easingLabel.textContent = "Easing:";
   timingPanel.appendChild(easingLabel);

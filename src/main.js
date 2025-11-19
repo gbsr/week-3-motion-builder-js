@@ -1,15 +1,13 @@
-import { getCurrentStep, addStep } from "./state/state.js";
-import { renderEditorPanel, renderTimingControls } from "./ui/editorPanel.js";
+// src/main.js
+import { addStep } from "./state/state.js";
+import { renderTimeline } from "./ui/renderTimeline.js";
 import { playCurrentStep } from "./preview/previewEngine.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-  const step = getCurrentStep();
-  renderTimingControls(step);
-  renderEditorPanel(step);
+  renderTimeline();
 
   // Preview hover
   const previewBox = document.getElementById("element-to-animate");
-  console.log("previewBox:", previewBox);
   if (previewBox) {
     previewBox.addEventListener("mouseenter", () => {
       playCurrentStep();
@@ -20,27 +18,31 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Add step button
   const addStepButton = document.getElementById("add-step-button");
-  console.log("addStepButton:", addStepButton);
   if (addStepButton) {
     addStepButton.addEventListener("click", () => {
-      const newStep = addStep();
-      renderTimingControls(newStep);
-      renderEditorPanel(newStep);
+      addStep(); 
+      renderTimeline(); // rebuild timeline UI
     });
-  } else {
-    console.warn("No #add-step-button found in DOM");
   }
 
   // Play button
   const playButton = document.getElementById("play-button");
-  console.log("playButton:", playButton);
   if (playButton) {
     playButton.addEventListener("click", () => {
       playCurrentStep();
     });
-  } else {
-    console.warn("No #play-button found in DOM");
   }
 
   console.log("Initialization complete.");
 });
+
+// Description toggle
+const descToggle = document.getElementById("description-toggle");
+const descContent = document.getElementById("description-content");
+
+if (descToggle && descContent) {
+  descToggle.addEventListener("click", () => {
+    const isHidden = descContent.classList.toggle("hidden");
+    descToggle.textContent = (isHidden ? "▸" : "▾") + " Description";
+  });
+}

@@ -36,3 +36,9 @@ export function addStep() {
   state.currentStepIndex = state.steps.length - 1;
   return newStep;
 }
+
+export function setCurrentStepIndex(index) {
+  if (index >= 0 && index < state.steps.length) {
+    state.currentStepIndex = index;
+  }
+}

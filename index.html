@@ -13,25 +13,37 @@
 
   <div class="main-content">
     <aside class="sidebar">
-      <h1>Motion Builder JS</h1>
-      <span>A visual front-end for creating animations quickly by hand. 
-        You tweak the values; it shows you the motion and generates the complete JS for you to use anywhere.</span>
-        <p>Just copy paste the generated code, and replace the target element with your own element.</p>
-        <div class="timing-controls" id="timing-controls">
-          <h2>Animation Timeline</h2>
-          <div id="steps-container">
-            <!-- Dynamic steps will be injected here -->
-          </div>
-            <button id="add-step-button">+ Add Step</button>
-            <button id="play-button">+ Play Animation</button>
-          </div>
-        <div class="editor-panel" id="editor-panel">
-          <div class="spacer"></div>
-          <h2>Animation Properties</h2>
-            <div id="editor-panel-content">
-            <!-- Dynamic content will be injected here -->
-            </div>
+      <div class="description"><h1>Motion Builder JS</h1>
+        <!-- desc toggle -->
+        <button id="description-toggle" class="desc-toggle">
+          ▾ ?
+        </button>
+
+        <div id="description-content" class="description-content">
+          <span>
+            A visual front-end for creating animations quickly by hand. 
+            You tweak the values; it shows you the motion and generates the complete JS for you to use anywhere.
+          </span>
+          <p>
+            Just copy paste the generated code, and replace the target element with your own element.
+          </p>
         </div>
+      </div>
+
+        <div class="timing-controls" id="timing-controls">
+          <div class="spacer"></div>
+        <h2>Animation Timeline</h2>
+        
+        <div class="timeline-actions">
+          <button id="add-step-button">Add Step</button>
+          <button id="play-button">Play Animation</button>
+          <button id="delete-step-button">Delete Step</button>
+        </div>       
+        <div id="steps-container">
+          <div class="spacer"></div>
+          <!-- Steps will be injected here -->
+        </div>     
+      </div>
     </aside>
     <div class="animation-builder">
       <div class="preview">

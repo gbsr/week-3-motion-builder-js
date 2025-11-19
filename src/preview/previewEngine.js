@@ -37,9 +37,9 @@ export function playCurrentStep() {
   const el = document.getElementById("element-to-animate");
   if (!el) return;
 
-  const [fromKF, toKF] = buildKeyframesFromStep(step);
+  const [fromKeyframe, toKeyframe] = buildKeyframesFromStep(step);
 
-  el.animate([fromKF, toKF], {
+  el.animate([fromKeyframe, toKeyframe], {
     duration: step.duration,
     easing: step.easing,
     fill: "forwards"
