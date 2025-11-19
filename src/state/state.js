@@ -42,3 +42,14 @@ export function setCurrentStepIndex(index) {
     state.currentStepIndex = index;
   }
 }
+
+export function deleteStep(index) {
+  if (state.steps.length <= 1) return; // prevent deleting last step
+
+  state.steps.splice(index, 1);
+
+  // Fix current index
+  if (state.currentStepIndex >= state.steps.length) {
+    state.currentStepIndex = state.steps.length - 1;
+  }
+}

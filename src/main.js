@@ -1,5 +1,5 @@
 // src/main.js
-import { addStep } from "./state/state.js";
+import { addStep, deleteStep, state } from "./state/state.js";
 import { renderTimeline } from "./ui/renderTimeline.js";
 import { playCurrentStep } from "./preview/previewEngine.js";
 
@@ -24,6 +24,16 @@ window.addEventListener("DOMContentLoaded", () => {
       renderTimeline(); // rebuild timeline UI
     });
   }
+
+  // Delete selected step
+  const deleteStepButton = document.getElementById("delete-step-button");
+  if (deleteStepButton) {
+    deleteStepButton.addEventListener("click", () => {
+      deleteStep(state.currentStepIndex);
+      renderTimeline();
+    });
+  }
+
 
   // Play button
   const playButton = document.getElementById("play-button");

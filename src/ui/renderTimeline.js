@@ -15,7 +15,7 @@ export function renderTimeline() {
     if (index === state.currentStepIndex) header.classList.add("active");
 
     const chevron = index === state.currentStepIndex ? "▾" : "▸";
-    header.textContent = `${chevron} ${step.name || `Step ${index + 1}`} properties:`;
+    header.textContent = `${chevron} Step ${index + 1} properties:`;
 
     header.addEventListener("click", () => {
       setCurrentStepIndex(index);
