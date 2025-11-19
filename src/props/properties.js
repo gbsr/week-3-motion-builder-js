@@ -10,7 +10,7 @@ export const PROPERTIES = {
     defaultTo: 0,
     category: "transform",
     unit: "px",
-    appliesTo: "transform"
+    appliesTo: "transform.translateX"
   },
 
   y: {
@@ -24,7 +24,7 @@ export const PROPERTIES = {
     defaultTo: 0,
     category: "transform",
     unit: "px",
-    appliesTo: "transform"
+    appliesTo: "transform.translateY"
   },
 
   scale: {
@@ -38,7 +38,7 @@ export const PROPERTIES = {
     defaultTo: 1,
     category: "transform",
     unit: "",
-    appliesTo: "transform"
+    appliesTo: "transform.scale"
   },
 
   opacity: {
