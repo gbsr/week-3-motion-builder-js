@@ -1,7 +1,7 @@
 // src/main.js
 import { addStep, deleteStep, state } from "./state/state.js";
 import { renderTimeline } from "./ui/renderTimeline.js";
-import { playCurrentStep } from "./preview/previewEngine.js";
+import { playCurrentStep, playTimeline } from "./preview/previewEngine.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const playButton = document.getElementById("play-button");
   if (playButton) {
     playButton.addEventListener("click", () => {
-      playCurrentStep();
+      playTimeline();
     });
   }
 

@@ -1,5 +1,6 @@
 import { getCurrentStep } from "../state/state.js";
 import { PROPERTIES } from "../props/properties.js";
+import { state } from "../state/state.js";
 
 export function playCurrentStep() {
   const step = getCurrentStep();
@@ -66,4 +67,36 @@ function buildFrame(values) {
   }
 
   return frame;
+}
+
+export function playTimeline() {
+  const el = document.getElementById("element-to-animate");
+  if (!el || state.steps.length === 0) return;
+
+  // cancel any running animations before starting the sequence
+  if (el.getAnimations) {
+    el.getAnimations().forEach((a) => a.cancel());
+  }
+
+  let index = 0;
+
+  function runNext() {
+    if (index >= state.steps.length) return;
+
+    const step = state.steps[index];
+    const [fromKeyframe, toKeyframe] = buildKeyframesFromStep(step);
+
+    const animation = el.animate([fromKeyframe, toKeyframe], {
+      duration: step.duration,
+      easing: step.easing,
+      fill: index === state.steps.length - 1 
+      ? "forwards" // final step → freeze the end result
+      : "none"     // intermediate steps → don't freeze end state
+    });
+
+    index += 1;
+    animation.onfinish = runNext;
+  }
+
+  runNext();
 }
