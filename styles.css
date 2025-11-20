@@ -225,3 +225,9 @@ input {
   text-shadow: 0 0 5px #000;
 
 }
+
+.animation-settings {
+  padding-bottom: 24px;
+  display: flex;
+  gap: 10px;
+}

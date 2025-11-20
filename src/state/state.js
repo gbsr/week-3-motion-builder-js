@@ -20,6 +20,25 @@ export function createDefaultStep(name, index) {
   };
 }
 
+export const animationSettings = {
+  trigger: "hover",   // "hover" | "click" | "load" | "manual"
+  iterations: 1       // number or "infinite"
+};
+
+export function setTrigger(trigger) {
+  animationSettings.trigger = trigger;
+}
+
+export function setIterations(raw) {
+  if (raw === "infinite") {
+    animationSettings.iterations = "infinite";
+    return;
+  }
+
+  const n = Number(raw);
+  animationSettings.iterations = Number.isFinite(n) && n > 0 ? n : 1;
+}
+
 export const state = {
   steps: [createDefaultStep("Step 1", 1)],
   currentStepIndex: 0

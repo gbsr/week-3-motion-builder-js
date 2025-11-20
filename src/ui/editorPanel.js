@@ -92,3 +92,69 @@ export function renderTimingControls(step, parent) {
   });
   timingPanel.appendChild(easingSelect);
 }
+
+import { animationSettings, setTrigger, setIterations } from "../state/state.js";
+
+
+// iteration and trigger settings
+export function renderAnimationSettings(container) {
+  container.innerHTML = "";
+
+  // trigger
+  const triggerLabel = document.createElement("label");
+  triggerLabel.textContent = "Trigger:";
+  container.appendChild(triggerLabel);
+
+  const triggerSelect = document.createElement("select");
+  ["hover", "click", "load", "manual"].forEach(value => {
+    const opt = document.createElement("option");
+    opt.value = value;
+    opt.textContent = {
+      hover: "On hover",
+      click: "On click",
+      load: "On page load",
+      manual: "Manual"
+    }[value];
+    if (value === animationSettings.trigger) opt.selected = true;
+    triggerSelect.appendChild(opt);
+  });
+  triggerSelect.addEventListener("change", () => {
+    setTrigger(triggerSelect.value);
+  });
+  container.appendChild(triggerSelect);
+
+  // iterations
+  const iterLabel = document.createElement("label");
+  iterLabel.textContent = "Iterations:";
+  container.appendChild(iterLabel);
+
+  const iterSelect = document.createElement("select");
+  [
+    { value: "1",        label: "1" },
+    { value: "2",        label: "2" },
+    { value: "3",        label: "3" },
+    { value: "5",        label: "5" },
+    { value: "10",       label: "10" },
+    { value: "infinite", label: "∞ Infinite" }
+  ].forEach(optValue => {
+    const opt = document.createElement("option");
+    opt.value = optValue.value;
+    opt.textContent = optValue.label;
+
+    const current = animationSettings.iterations;
+    if (
+      (current === "infinite" && optValue.value === "infinite") ||
+      (typeof current === "number" && String(current) === optValue.value)
+    ) {
+      opt.selected = true;
+    }
+
+    iterSelect.appendChild(opt);
+  });
+
+  iterSelect.addEventListener("change", () => {
+    setIterations(iterSelect.value);
+  });
+
+  container.appendChild(iterSelect);
+}

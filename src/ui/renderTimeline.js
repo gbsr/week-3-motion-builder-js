@@ -1,11 +1,20 @@
 // src/ui/renderTimeline.js
 import { state, getCurrentStep, setCurrentStepIndex } from "../state/state.js";
-import { renderEditorPanel, renderTimingControls } from "../ui/editorPanel.js";
+import { renderEditorPanel, renderTimingControls, renderAnimationSettings } from "../ui/editorPanel.js";
 
 export function renderTimeline() {
   const stepsContainer = document.getElementById("steps-container");
   const timeControls = document.getElementById("timing-controls");
   if (!stepsContainer || !timeControls) return;
+
+  // animationSettings dropdown
+  let settings = timeControls.querySelector(".animation-settings");
+  if (!settings) {
+    settings = document.createElement("div");
+    settings.className = "animation-settings";
+    timeControls.insertBefore(settings, stepsContainer);
+  }
+  renderAnimationSettings(settings);
 
   stepsContainer.innerHTML = "";
 

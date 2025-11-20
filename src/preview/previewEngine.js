@@ -1,6 +1,6 @@
 import { getCurrentStep } from "../state/state.js";
 import { PROPERTIES } from "../props/properties.js";
-import { state } from "../state/state.js";
+import { state, animationSettings } from "../state/state.js";
 
 export function playCurrentStep() {
   const step = getCurrentStep();
@@ -14,9 +14,15 @@ export function playCurrentStep() {
 
   const [fromKeyframe, toKeyframe] = buildKeyframesFromStep(step);
 
+  const iterations =
+    animationSettings.iterations === "infinite"
+      ? Infinity
+      : Number(animationSettings.iterations) || 1;
+
   el.animate([fromKeyframe, toKeyframe], {
     duration: step.duration,
     easing: step.easing,
+    iterations,
     fill: "forwards"
   });
 }
@@ -78,20 +84,38 @@ export function playTimeline() {
     el.getAnimations().forEach((a) => a.cancel());
   }
 
+  const steps = state.steps;
+  const totalIterations =
+    animationSettings.iterations === "infinite"
+      ? Infinity
+      : Number(animationSettings.iterations) || 1;
+
+  let iteration = 0;
   let index = 0;
 
   function runNext() {
-    if (index >= state.steps.length) return;
+    // if we've played all steps in this iteration, move to next iteration
+    if (index >= steps.length) {
+      iteration += 1;
+      index = 0;
 
-    const step = state.steps[index];
+      if (iteration >= totalIterations) {
+        return;
+      }
+    }
+
+    const step = steps[index];
     const [fromKeyframe, toKeyframe] = buildKeyframesFromStep(step);
+
+    const isLastStepOfLastIteration =
+      iteration === totalIterations - 1 && index === steps.length - 1;
 
     const animation = el.animate([fromKeyframe, toKeyframe], {
       duration: step.duration,
       easing: step.easing,
-      fill: index === state.steps.length - 1 
-      ? "forwards" // final step → freeze the end result
-      : "none"     // intermediate steps → don't freeze end state
+      fill: isLastStepOfLastIteration
+        ? "forwards" // final step → freeze the end result
+        : "none"     // intermediate steps → don't freeze end state
     });
 
     index += 1;

@@ -1,9 +1,9 @@
-import { state } from "../state/state.js";
+import { state, animationSettings } from "../state/state.js";
 import { buildKeyframesFromStep } from "../preview/previewEngine.js";
 
 
 export function generateCodeFromTimeline(element) {
- 
+
   element.textContent = "";
   const steps = state.steps;
   const lines = [];
@@ -13,6 +13,15 @@ export function generateCodeFromTimeline(element) {
   lines.push("");
 
   lines.push(`const element = document.querySelector("#your-element");`);
+  lines.push("");
+
+  // iterations
+  const iter =
+    animationSettings.iterations === "infinite"
+      ? "Infinity"
+      : animationSettings.iterations;
+
+  lines.push(`const iterations = ${iter};`);
   lines.push("");
 
   lines.push(`const timeline = [`);
@@ -27,11 +36,11 @@ export function generateCodeFromTimeline(element) {
     lines.push(`    to:   ${JSON.stringify(toFrame)}`);
     lines.push(`  }${index < steps.length - 1 ? "," : ""}`);
   });
-
+  
   lines.push(`];`);
   lines.push("");
   lines.push(`// To run:`);
-  lines.push(`// playTimeline(element, timeline);`);
+  lines.push(`// playTimeline(element, timeline, iterations);`);
 
   element.textContent = lines.join("\n");
 }
