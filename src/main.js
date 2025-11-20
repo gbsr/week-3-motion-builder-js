@@ -56,6 +56,6 @@ const descContent = document.getElementById("description-content");
 if (descToggle && descContent) {
   descToggle.addEventListener("click", () => {
     const isHidden = descContent.classList.toggle("hidden");
-    descToggle.textContent = (isHidden ? "▸" : "▾") + " Description";
+    descToggle.textContent = (isHidden ? "▸" : "▾") + " What is this?";
   });
 }
