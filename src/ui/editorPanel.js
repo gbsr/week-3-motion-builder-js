@@ -12,6 +12,35 @@ export function renderEditorPanel(step, parent) {
 
   panel.innerHTML = "";
 
+  // helper: keep the active step header summary (X position (0→150), …) in sync
+  function updateHeaderSummary() {
+    const header = document.querySelector("#steps-container .step-header.active");
+    if (!header) return;
+
+    const base = header.textContent.split(" – ")[0]; // "▾ Step 1 properties:"
+    const activePropIds =
+      step.activeProps && step.activeProps.length
+        ? step.activeProps
+        : [];
+
+    if (!activePropIds.length) {
+      header.textContent = base;
+      return;
+    }
+
+    const parts = activePropIds.map((id) => {
+      const def = PROPERTIES[id];
+      if (!def) return id;
+
+      const fromVal = step.from[id] ?? def.defaultFrom;
+      const toVal   = step.to[id]   ?? def.defaultTo;
+
+      return `${def.label} (${fromVal}→${toVal})`;
+    });
+
+    header.textContent = `${base} – ${parts.join(", ")}`;
+  }
+
   // use activeProps if present, otherwise fall back to all properties
   const activePropIds =
     step.activeProps && step.activeProps.length
@@ -54,6 +83,8 @@ export function renderEditorPanel(step, parent) {
 
       // re-render this panel for the same step
       renderEditorPanel(step, parent);
+
+      updateHeaderSummary();
     });
     propertyContainer.appendChild(deleteBtn);
 
@@ -72,6 +103,7 @@ export function renderEditorPanel(step, parent) {
       step.from[propId] !== undefined ? step.from[propId] : prop.defaultFrom;
     inputFrom.addEventListener("input", () => {
       step.from[propId] = Number(inputFrom.value);
+      updateHeaderSummary();
     });
     propDiv.appendChild(inputFrom);
 
@@ -88,11 +120,15 @@ export function renderEditorPanel(step, parent) {
       step.to[propId] !== undefined ? step.to[propId] : prop.defaultTo;
     inputTo.addEventListener("input", () => {
       step.to[propId] = Number(inputTo.value);
+      updateHeaderSummary();
     });
     propDiv.appendChild(inputTo);
 
     panel.appendChild(propDiv);
   });
+
+  // make sure header summary is correct on first render as well
+  updateHeaderSummary();
 }
 
 export function renderTimingControls(step, parent) {

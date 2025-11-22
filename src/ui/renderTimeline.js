@@ -1,6 +1,7 @@
 // src/ui/renderTimeline.js
 import { state, getCurrentStep, setCurrentStepIndex } from "../state/state.js";
 import { renderEditorPanel, renderTimingControls, renderAnimationSettings } from "../ui/editorPanel.js";
+import { PROPERTIES } from "../props/properties.js";
 
 export function renderTimeline() {
   const stepsContainer = document.getElementById("steps-container");
@@ -19,7 +20,28 @@ export function renderTimeline() {
     if (index === state.currentStepIndex) header.classList.add("active");
 
     const chevron = index === state.currentStepIndex ? "▾" : "▸";
-    header.textContent = `${chevron} Step ${index + 1} properties:`;
+
+    // render property summary for this step
+    const activePropIds =
+      step.activeProps && step.activeProps.length ? step.activeProps : [];
+
+    // Build property summary: "X position (0→150), Scale (1→2)"
+    let summary = "";
+    if (activePropIds.length > 0) {
+      const labelList = activePropIds.map((id) => {
+        const def = PROPERTIES[id];
+        if (!def) return id;
+
+        const fromVal = step.from[id] ?? def.defaultFrom;
+        const toVal = step.to[id] ?? def.defaultTo;
+
+        return `${def.label} (${fromVal}→${toVal})`;
+      });
+
+      summary = " - " + labelList.join(", ");
+    }
+
+    header.textContent = `${chevron} Step ${index + 1} properties:${summary}`;
 
     header.addEventListener("click", () => {
       setCurrentStepIndex(index);
@@ -37,9 +59,11 @@ export function renderTimeline() {
     timeControls.appendChild(details);
   }
 
-  // timing + editor panel for current step
   details.innerHTML = "";
   const current = getCurrentStep();
   renderTimingControls(current, details);
-  renderEditorPanel(current, details);
+
+  // Pass the active header to editor panel, so it can update summary live
+  const activeHeader = stepsContainer.querySelector(".step-header.active");
+  renderEditorPanel(current, details, activeHeader);
 }
