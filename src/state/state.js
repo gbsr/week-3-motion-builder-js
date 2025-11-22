@@ -49,9 +49,25 @@ export function getCurrentStep() {
   return state.steps[state.currentStepIndex];
 }
 
+// 🔁 chain new steps from the previous step
 export function addStep() {
   const index = state.steps.length + 1;
   const newStep = createDefaultStep(`Step ${index}`, index);
+
+  const prev = state.steps[state.steps.length - 1];
+  if (prev) {
+    // copy which props are active
+    if (prev.activeProps && prev.activeProps.length) {
+      newStep.activeProps = [...prev.activeProps];
+    }
+
+    // start this step *where the previous ended*
+    Object.keys(prev.to).forEach((id) => {
+      newStep.from[id] = prev.to[id];
+      newStep.to[id] = prev.to[id]; // same start/end until the user tweaks it
+    });
+  }
+
   state.steps.push(newStep);
   state.currentStepIndex = state.steps.length - 1;
   return newStep;
