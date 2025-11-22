@@ -21,8 +21,8 @@
 
         <div id="description-content" class="description-content">
           <span>
-            A visual front-end for creating animations quickly by hand. 
-            You tweak the values; it shows you the motion and generates the complete JS for you to use anywhere.
+            A visual front-end for creating keyframe CSS animations quickly by hand. 
+            You tweak the values; it shows you the motion and generates the complete CSS and JS for you to use anywhere.
           </span>
           <p>String up as many steps as you want to, select the trigger style and iterations.</p>
           <p>
@@ -39,7 +39,15 @@
           <button id="add-step-button">Add Step</button>
           <button id="play-button">Play Animation</button>
           <button id="delete-step-button">Delete Step</button>
-        </div>       
+        </div>
+        
+        <div class="add-global-property-row">
+          <select id="global-add-property-select">
+            <option value="" disabled selected>Add property…</option>
+          </select>
+          <button id="global-add-property-button">Add</button>
+        </div>     
+        
         <div id="steps-container">
           <div class="spacer"></div>
           <!-- Steps will be injected here -->
@@ -54,7 +62,7 @@
       </div>
       <div class="code-export">
         <span><h2>Generated Code</h2> <button id="copy-button">Copy code</button></span>
-        <pre><code id="generated-code">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo animi veritatis harum! Similique natus at molestias dicta. Sit corrupti molestiae nisi repellendus quaerat, sed neque quod corporis nemo, consequatur et.</code></pre>
+        <pre><code id="generated-code">Preview the animation to generate the code.</code></pre>
     </div>
   </div>
 </body>

@@ -31,8 +31,8 @@ export function playCurrentStep() {
 //  Turn a step into two Web Animations keyframes: [from, to]
  
 export function buildKeyframesFromStep(step) {
-  const fromFrame = buildFrame(step.from);
-  const toFrame = buildFrame(step.to);
+  const fromFrame = buildFrame(step, step.from);
+  const toFrame = buildFrame(step, step.to);
   return [fromFrame, toFrame];
 }
 
@@ -40,12 +40,21 @@ export function buildKeyframesFromStep(step) {
 //  Build a single keyframe object from a value map (step.from or step.to).
 //  All routing is driven by PROPERTIES + appliesTo.
  
-function buildFrame(values) {
+function buildFrame(step, values) {
   const frame = {};
   const transformPieces = [];
 
-  for (const id in PROPERTIES) {
+  // use the step's activeProps if present, otherwise empty array
+  const activePropIds =
+    step.activeProps && step.activeProps.length
+      ? step.activeProps
+      : [];
+
+  for (const id of activePropIds) {
     const def = PROPERTIES[id];
+
+    if (!def) continue; // safety if something got removed
+
     const value = values[id] ?? def.defaultFrom;
     const unit = def.unit ?? "";
     const appliesTo = def.appliesTo;

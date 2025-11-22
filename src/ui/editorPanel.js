@@ -1,12 +1,27 @@
 import { PROPERTIES } from "../props/properties.js";
+import { animationSettings, setTrigger, setIterations } from "../state/state.js";
 
 export function renderEditorPanel(step, parent) {
-  const panel = document.createElement("div");
-  panel.className = "editor-panel-content";
-  parent.appendChild(panel);
+  // reuse a single panel element under this parent
+  let panel = parent.querySelector(".editor-panel-content");
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.className = "editor-panel-content";
+    parent.appendChild(panel);
+  }
 
-  for (const propId in PROPERTIES) {
+  panel.innerHTML = "";
+
+  // use activeProps if present, otherwise fall back to all properties
+  const activePropIds =
+    step.activeProps && step.activeProps.length
+      ? step.activeProps
+      : [];
+
+  // render each active property row
+  activePropIds.forEach((propId) => {
     const prop = PROPERTIES[propId];
+    if (!prop) return;
 
     const propDiv = document.createElement("div");
     propDiv.className = "property-control";
@@ -19,6 +34,29 @@ export function renderEditorPanel(step, parent) {
     nameSpan.textContent = prop.label;
     propertyContainer.appendChild(nameSpan);
 
+    // delete button for this property
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "prop-delete-button";
+    deleteBtn.textContent = "×";
+    deleteBtn.title = "Remove this property from the animation";
+    deleteBtn.addEventListener("click", () => {
+      // remove from active props
+      const current = step.activeProps && step.activeProps.length
+        ? step.activeProps
+        : activePropIds;
+
+      step.activeProps = current.filter((id) => id !== propId);
+
+      // remove stored values to avoid stale data
+      delete step.from[propId];
+      delete step.to[propId];
+
+      // re-render this panel for the same step
+      renderEditorPanel(step, parent);
+    });
+    propertyContainer.appendChild(deleteBtn);
+
     propDiv.appendChild(propertyContainer);
 
     const labelFrom = document.createElement("label");
@@ -30,7 +68,8 @@ export function renderEditorPanel(step, parent) {
     inputFrom.min = prop.min;
     inputFrom.max = prop.max;
     inputFrom.step = prop.step;
-    inputFrom.value = step.from[propId];
+    inputFrom.value =
+      step.from[propId] !== undefined ? step.from[propId] : prop.defaultFrom;
     inputFrom.addEventListener("input", () => {
       step.from[propId] = Number(inputFrom.value);
     });
@@ -45,14 +84,15 @@ export function renderEditorPanel(step, parent) {
     inputTo.min = prop.min;
     inputTo.max = prop.max;
     inputTo.step = prop.step;
-    inputTo.value = step.to[propId];
+    inputTo.value =
+      step.to[propId] !== undefined ? step.to[propId] : prop.defaultTo;
     inputTo.addEventListener("input", () => {
       step.to[propId] = Number(inputTo.value);
     });
     propDiv.appendChild(inputTo);
 
     panel.appendChild(propDiv);
-  }
+  });
 }
 
 export function renderTimingControls(step, parent) {
@@ -92,9 +132,6 @@ export function renderTimingControls(step, parent) {
   });
   timingPanel.appendChild(easingSelect);
 }
-
-import { animationSettings, setTrigger, setIterations } from "../state/state.js";
-
 
 // iteration and trigger settings
 export function renderAnimationSettings(container) {

@@ -16,7 +16,8 @@ export function createDefaultStep(name, index) {
     duration: 800,
     easing: "ease-in-out",
     from,
-    to
+    to,
+    activeProps: [],
   };
 }
 

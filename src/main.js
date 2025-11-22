@@ -7,6 +7,34 @@ import { generateCodeFromTimeline } from "./ui/codeOutput.js";
 window.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
   const generatedCode = document.getElementById("generated-code");
+
+  // Populate global add-property dropdown
+  const selectGlobal = document.getElementById("global-add-property-select");
+  Object.entries(PROPERTIES).forEach(([id, def]) => {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.textContent = def.label;
+    selectGlobal.appendChild(opt);
+  });
+
+  // Add selected property to current step
+  document.getElementById("global-add-property-button")
+    .addEventListener("click", () => {
+      const step = state.steps[state.currentStepIndex];
+      const id = selectGlobal.value;
+      if (!id) return;
+
+      if (!step.activeProps) step.activeProps = [];
+
+      if (!step.activeProps.includes(id)) {
+        step.activeProps.push(id);
+        const def = PROPERTIES[id];
+        step.from[id] = def.defaultFrom;
+        step.to[id] = def.defaultTo;
+      }
+
+      renderTimeline();
+  });
   
   // Preview hover
   const previewBox = document.getElementById("element-to-animate");

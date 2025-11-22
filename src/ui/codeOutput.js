@@ -67,6 +67,9 @@ export function generateCodeFromTimeline(element) {
     );
 
     // Start of this step
+    lines.push(``);
+    lines.push(`  /* Step ${index + 1} */`);
+    lines.push(``);
     lines.push(`  ${startPercent}% {`);
     frameToCssLines(fromFrame, "    ").forEach((l) => lines.push(l));
     lines.push(`  }`);
@@ -111,6 +114,9 @@ export function generateCodeFromTimeline(element) {
   if (trigger === "hover") {
     lines.push(`if (element) {`);
     lines.push(`  element.addEventListener("mouseenter", startMotionBuilderAnimation);`);
+    lines.push(`  element.addEventListener("mouseleave", () => {`);
+    lines.push(`    element.classList.remove("mbjs-animation");`);
+    lines.push(`  });`);
     lines.push(`}`);
   } else if (trigger === "click") {
     lines.push(`if (element) {`);

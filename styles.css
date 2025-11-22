@@ -51,7 +51,7 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center; /* horizontal center */
-  justify-content: center; /* vertical center */
+  justify-content: space-around; /* vertical center */
 }
 
 /* BOTTOM BOX: code panel */
@@ -76,6 +76,7 @@ aside {
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 40px);
+  width: 100%;
   padding-block: 14px;
   margin: 0;
 }
@@ -108,11 +109,10 @@ span {
 }
 
 .animate-me {
-  width: 180px;
-  height: 180px;
+  width: 80px;
+  height: 80px;
   background-color: #333;
   border: 1px solid #555;
-  border-radius: 20px;
 }
 
 button {
@@ -157,8 +157,12 @@ input {
 }
 
 .step-controls {
+  display: flex;
+  align-items: center;
+  padding-bottom: 14px;
   border-bottom: 1px solid #555;
   margin-bottom: 14px;
+  gap: 10px;
 }
 
 #steps-container {
@@ -179,7 +183,7 @@ input {
   margin: 14px 0;
 }
 
-.timeline-actions button {
+.timeline-actions button, .add-global-property-row button {
   font-size: 14px;
   font-weight: 700;
   margin-block: 14px;
@@ -187,6 +191,18 @@ input {
   text-align: left;
   border-radius: 10px;
   background: #222
+}
+
+select {
+  display: block;
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #222;
+  color: white;
+  padding-right: 14px;
+
 }
 
 .desc-toggle {
@@ -230,4 +246,5 @@ input {
   padding-bottom: 24px;
   display: flex;
   gap: 10px;
+  align-items: center;
 }
