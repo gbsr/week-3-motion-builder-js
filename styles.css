@@ -113,6 +113,9 @@ span {
   height: 80px;
   background-color: #333;
   border: 1px solid #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button {
@@ -138,6 +141,10 @@ input {
   background-color: #444;
   color: white;
   margin: 14px;
+}
+
+input[type="color"] {
+  padding: 2px;
 }
 
 .property-control {

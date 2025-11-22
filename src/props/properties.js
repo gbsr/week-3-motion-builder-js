@@ -96,4 +96,24 @@ export const PROPERTIES = {
     unit: "px",
     appliesTo: "style.borderWidth"
   },
+  color: {
+    id: "color",
+    label: "Color",
+    type: "color",
+    defaultFrom: "#ff0000",
+    defaultTo: "#ff0000",
+    category: "style",
+    unit: "",
+    appliesTo: "style.color"
+  },
+  backgroundColor: {
+    id: "backgroundColor",
+    label: "Background Color",
+    type: "color",
+    defaultFrom: "#000000",
+    defaultTo: "#000000",
+    category: "style",
+    unit: "",
+    appliesTo: "style.backgroundColor"
+  }
 };

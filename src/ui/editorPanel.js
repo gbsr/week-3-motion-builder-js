@@ -90,20 +90,29 @@ export function renderEditorPanel(step, parent) {
 
     propDiv.appendChild(propertyContainer);
 
+    const isColor = prop.type === "color";
+
     const labelFrom = document.createElement("label");
     labelFrom.textContent = "From:";
     propDiv.appendChild(labelFrom);
 
     const inputFrom = document.createElement("input");
-    inputFrom.type = "number";
-    inputFrom.min = prop.min;
-    inputFrom.max = prop.max;
-    inputFrom.step = prop.step;
+    inputFrom.type = isColor ? "color" : "number";
+
+    if (!isColor) {
+      inputFrom.min = prop.min;
+      inputFrom.max = prop.max;
+      inputFrom.step = prop.step;
+    }
+
     inputFrom.value =
       step.from[propId] !== undefined ? step.from[propId] : prop.defaultFrom;
+
     inputFrom.addEventListener("input", () => {
-      step.from[propId] = Number(inputFrom.value);
-      updateHeaderSummary();
+      step.from[propId] = isColor
+        ? inputFrom.value       // "#rrggbb"
+        : Number(inputFrom.value);
+        updateHeaderSummary()
     });
     propDiv.appendChild(inputFrom);
 
@@ -112,14 +121,21 @@ export function renderEditorPanel(step, parent) {
     propDiv.appendChild(labelTo);
 
     const inputTo = document.createElement("input");
-    inputTo.type = "number";
-    inputTo.min = prop.min;
-    inputTo.max = prop.max;
-    inputTo.step = prop.step;
+    inputTo.type = isColor ? "color" : "number";
+
+    if (!isColor) {
+      inputTo.min = prop.min;
+      inputTo.max = prop.max;
+      inputTo.step = prop.step;
+    }
+
     inputTo.value =
       step.to[propId] !== undefined ? step.to[propId] : prop.defaultTo;
+
     inputTo.addEventListener("input", () => {
-      step.to[propId] = Number(inputTo.value);
+      step.to[propId] = isColor
+        ? inputTo.value
+        : Number(inputTo.value);
       updateHeaderSummary();
     });
     propDiv.appendChild(inputTo);
