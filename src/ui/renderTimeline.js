@@ -5,16 +5,11 @@ import { renderEditorPanel, renderTimingControls, renderAnimationSettings } from
 export function renderTimeline() {
   const stepsContainer = document.getElementById("steps-container");
   const timeControls = document.getElementById("timing-controls");
-  if (!stepsContainer || !timeControls) return;
+  const settingsContainer = document.getElementById("animation-settings");
+  if (!stepsContainer || !timeControls || !settingsContainer) return;
 
-  // animationSettings dropdown
-  let settings = timeControls.querySelector(".animation-settings");
-  if (!settings) {
-    settings = document.createElement("div");
-    settings.className = "animation-settings";
-    timeControls.insertBefore(settings, stepsContainer);
-  }
-  renderAnimationSettings(settings);
+  // render GLOBAL animation settings once, above the buttons
+  renderAnimationSettings(settingsContainer);
 
   stepsContainer.innerHTML = "";
 

@@ -3,6 +3,7 @@ import { addStep, deleteStep, state } from "./state/state.js";
 import { renderTimeline } from "./ui/renderTimeline.js";
 import { playCurrentStep, playTimeline } from "./preview/previewEngine.js";
 import { generateCodeFromTimeline } from "./ui/codeOutput.js";
+import { PROPERTIES } from "./props/properties.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
@@ -77,10 +78,25 @@ window.addEventListener("DOMContentLoaded", () => {
   console.log("Initialization complete.");
 });
 
+const copyButton = document.getElementById("copy-button");
+if (copyButton) {
+  copyButton.addEventListener("click", () => {
+    const generatedCode = document.getElementById("generated-code");
+    if (generatedCode) {
+      navigator.clipboard.writeText(generatedCode.textContent)
+        .then(() => {
+          alert("Code copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy code: ", err);
+        });
+    }
+  });
+}
+
 // Description toggle
 const descToggle = document.getElementById("description-toggle");
 const descContent = document.getElementById("description-content");
-
 if (descToggle && descContent) {
   descToggle.addEventListener("click", () => {
     const isHidden = descContent.classList.toggle("hidden");

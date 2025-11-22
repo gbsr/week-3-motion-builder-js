@@ -179,6 +179,8 @@ input {
 
 .timeline-actions {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
   margin: 14px 0;
 }
@@ -191,6 +193,12 @@ input {
   text-align: left;
   border-radius: 10px;
   background: #222
+}
+
+.add-global-property-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 select {
@@ -243,7 +251,6 @@ select {
 }
 
 .animation-settings {
-  padding-bottom: 24px;
   display: flex;
   gap: 10px;
   align-items: center;

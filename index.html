@@ -34,20 +34,27 @@
         <div class="timing-controls" id="timing-controls">
           <div class="spacer"></div>
         <h2>Animation Timeline</h2>
-        
+
+        <div id="animation-settings" class="animation-settings"></div>
+
         <div class="timeline-actions">
-          <button id="add-step-button">Add Step</button>
-          <button id="play-button">Play Animation</button>
-          <button id="delete-step-button">Delete Step</button>
+          <div class="timeline-contrainer">
+            <button id="add-step-button">Add animation Step</button>
+            <button id="play-button">Play Animation</button>
+            <button id="delete-step-button">Delete animation Step</button>
+          </div>
+
+          <div class="spacer"></div>
+          
+          <div class="add-global-property-row">
+            <select id="global-add-property-select">
+            <option value="" disabled selected>Add property to animate</option>
+            </select>
+            <button id="global-add-property-button">Add</button>
+          </div> 
         </div>
-        
-        <div class="add-global-property-row">
-          <select id="global-add-property-select">
-            <option value="" disabled selected>Add property…</option>
-          </select>
-          <button id="global-add-property-button">Add</button>
-        </div>     
-        
+          
+        <div class="spacer"></div>
         <div id="steps-container">
           <div class="spacer"></div>
           <!-- Steps will be injected here -->

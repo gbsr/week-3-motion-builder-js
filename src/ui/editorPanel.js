@@ -139,7 +139,7 @@ export function renderAnimationSettings(container) {
 
   // trigger
   const triggerLabel = document.createElement("label");
-  triggerLabel.textContent = "Trigger:";
+  triggerLabel.textContent = "Animation Trigger:";
   container.appendChild(triggerLabel);
 
   const triggerSelect = document.createElement("select");
