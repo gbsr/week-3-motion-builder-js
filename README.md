@@ -183,7 +183,7 @@ No libraries or installs needed.
 ## **Contact / Follow**
 
 * **Portfolio** : https://andershofsten.com
-* **Threads** : https://www.threads.net/@ruido_outpost
+* **Threads** : https://www.threads.com/@ruido_outpost
 * **LinkedIn** : https://www.linkedin.com/in/ahofsten/
 * **X** : https://x.com/soundsbyhofsten
 
